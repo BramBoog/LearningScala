@@ -1,7 +1,7 @@
 object Day02 extends App:
     import scala.io.Source
 
-    val ids: List[String] = Source.fromFile("src//main//resources//InputDay02.txt").getLines.toList
+    val ids: List[String] = Source.fromResource("InputDay02.txt").getLines.toList
 
     //Part 1
 

@@ -1,7 +1,7 @@
 object Day01 extends App:
     import scala.io.Source
 
-    val changes: List[Int] = Source.fromFile("src//main//resources//InputDay01.txt")
+    val changes: List[Int] = Source.fromResource("InputDay01.txt")
         .getLines.toList.map(x => x.toInt) //alternatief: .map(_.toInt)
     
 

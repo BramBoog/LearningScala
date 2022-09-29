@@ -2,7 +2,7 @@ object Day03 extends App:
     import scala.io.Source
     import scala.util.matching.Regex
 
-    val input: List[String] = Source.fromFile("src//main//resources//InputDay03.txt").getLines.toList
+    val input: List[String] = Source.fromResource("InputDay03.txt").getLines.toList
 
     val keyPattern: Regex = """.(\d+)\s@""".r
 
