@@ -1,7 +1,7 @@
-object Day01 extends App:
+object Day01_2018 extends App:
     import scala.io.Source
 
-    val changes: List[Int] = Source.fromFile("AdventOfCode2018/src/main/resources/InputDay01.txt")
+    val changes: List[Int] = Source.fromFile("aoc/src/main/resources/2018/InputDay01.txt")
         .getLines.toList.map(x => x.toInt) //alternatief: .map(_.toInt)
     
 

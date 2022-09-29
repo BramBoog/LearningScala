@@ -14,8 +14,8 @@ lazy val fps = project
   )
 
 lazy val aoc = project
-  .in(file("AdventOfCode2018"))
-  .settings( name           := "AdventOfCode2018"
+  .in(file("aoc"))
+  .settings( name           := "aoc"
     , version              := Version
     , scalaVersion         := ScalaVersion
     , libraryDependencies ++= TestDependencies
