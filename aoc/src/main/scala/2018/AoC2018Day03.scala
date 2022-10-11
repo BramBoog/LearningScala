@@ -1,4 +1,4 @@
-object Day03 extends App:
+object AoC2018Day03 extends App:
     import scala.io.Source
     import scala.util.matching.Regex
 

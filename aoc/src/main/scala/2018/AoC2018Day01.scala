@@ -1,4 +1,4 @@
-object Day01_2018 extends App:
+object AoC2018Day01 extends App:
     import scala.io.Source
 
     val changes: List[Int] = Source.fromFile("aoc/src/main/resources/2018/InputDay01.txt")
