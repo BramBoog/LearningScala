@@ -1,4 +1,4 @@
-object Day02 extends App:
+object Aoc2018Day02 extends App:
     import scala.io.Source
 
     val ids: List[String] = Source.fromFile("aoc/src/main/resources/2018/InputDay02.txt").getLines.toList
