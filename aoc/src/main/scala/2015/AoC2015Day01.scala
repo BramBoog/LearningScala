@@ -16,6 +16,6 @@ object AoC2015Day01 extends App:
             case (-1, _) => i-1
             case (_, '(') => findStepToBasement(instr.tail, curPos+1, i+1)
             case (_, ')') => findStepToBasement(instr.tail, curPos-1, i+1)
-
+    
     println(s"Result part 2: ${findStepToBasement(instructions.toList, 0, 1)}")
     
