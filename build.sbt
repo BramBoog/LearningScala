@@ -2,7 +2,7 @@ val ScalaVersion = "3.2.0"
 val Version      = "0.1.0"
 
 val TestDependencies = Seq(
-  "org.scalacheck" %% "scalacheck" % "1.17.0" % "test"
+  "org.scalatest"  %% "scalatest"  % "3.2.14" % "test"
 )
 
 lazy val fps = project
