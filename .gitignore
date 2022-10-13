@@ -7,3 +7,4 @@ target/
 .idea/
 project/metals.sbt
 project/project/
+.ipynb_checkpoints
