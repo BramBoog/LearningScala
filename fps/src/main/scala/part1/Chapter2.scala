@@ -10,16 +10,6 @@ object Chapter2 extends App:
             else loop(n+1)
         
         loop(1)
-
-
-    def isLarger(x: Int, y: Int): Boolean =
-        x > y
-
-    def isSmaller(x: Int, y: Int): Boolean =
-        x < y
-
-    def isLonger(x: String, y: String): Boolean =
-        x.length > y.length
     
     assert(isSorted(Array(4,3,2,1), (x: Int, y: Int) => x > y) == true)
     assert(isSorted(Array(2,3,1,4), (x: Int, y: Int) => x > y) == false)
