@@ -28,7 +28,7 @@ object Aoc2018Day02 extends App :
 
   //Part 2
 
-  def findSimilarIds(wordsList: List[String], wordsListLoop: List[String]): Tuple =
+  def findSimilarIds(wordsList: List[String], wordsListLoop: List[String]): (String, String) =
     val word: String = wordsList.head
     if (wordsListLoop.isEmpty) findSimilarIds(wordsList.tail, ids)
     else if (
@@ -38,7 +38,7 @@ object Aoc2018Day02 extends App :
     ) (word, wordsListLoop.head)
     else findSimilarIds(wordsList, wordsListLoop.tail)
 
-  val (similarId1: String, similarId2: String) = findSimilarIds(ids, ids)
+  val (similarId1, similarId2) = findSimilarIds(ids, ids)
   val sharedCharsAsString =
     similarId1
       .zip(similarId2)
