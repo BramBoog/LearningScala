@@ -24,7 +24,8 @@ object AoC2015Day02 extends App :
 
   def computeAreas(dimensionList: List[Int]): List[Int] =
 
-    // OMG !!!
+    /* dimensionList.combinations(2) will not work because it only creates unique pairs, e.g. List(11, 11, 10) will give List(List(11, 11), List(List(11, 10)))
+        and not List(List(11, 11), List(11, 10), List(11, 10)) as is necessary */
     val combinations: List[List[Int]] =
       for {
         (x, i) <- dimensionList.zipWithIndex
