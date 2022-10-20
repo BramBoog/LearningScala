@@ -9,10 +9,9 @@ object AoC2015Day04 extends App:
 
         def loop(i: Int): Int =
             val hash: String = md.digest((inputKey + i.toString).getBytes)
-                .map("%02X".format(_))
-                .mkString
-
-            if (hash.substring(0, n) == "0" * n) i
+                .foldLeft("")((str, b) => str + "%02X".format(b))
+                
+            if (hash.startsWith("0" * n)) i
             else loop(i + 1)
 
         loop(1)
