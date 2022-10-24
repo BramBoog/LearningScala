@@ -45,4 +45,9 @@ object AoC2015Day05 extends App:
 
     //println(s"Result part 1: ${answer1}")
 
-    println("xyxy".sliding(2).zipWithIndex.map((s, idx) => (s, (idx, idx+1))).toList)//(0)(0))
+    //println("xyxy".sliding(2).zipWithIndex.map((s, idx) => (s, (idx, idx+1))).toList)//(0)(0))
+    println(
+        "xyxy".sliding(2).zipWithIndex.map((s, idx) => (s, (idx, idx+1))).toList.groupBy(_(0))
+        .map((pair, pairsWithIdxList) => (pair, pairsWithIdxList.map((_, indices) => indices).fold(Set())((set, indices) => set.include(indices(0)).include(indices(1))))
+        )
+        //(pair, pairsWithIdxList.fold(Set())((set, pairWithidx) => set.include(pairWithIdx(0)(0)).include(pairWithIdx(0)(1))))
