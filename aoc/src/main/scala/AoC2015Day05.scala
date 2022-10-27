@@ -9,7 +9,7 @@ object AoC2015Day05 extends App:
 
     case class Word(str: String):
 
-        val pairs = str.sliding(2)
+        val pairs: List[String] = str.sliding(2).toList
 
         // Part 1
 
@@ -21,10 +21,10 @@ object AoC2015Day05 extends App:
             str.filter(char => vowels.contains(char)).length >= 3
         
         def twoLettersInRow(): Boolean =
-            str.sliding(2).filter(s => s(0) == s(1)).length >= 1
+            pairs.filter(s => s(0) == s(1)).length >= 1
 
         def noProhibitedSubstrings(): Boolean =
-            !(str.sliding(2).filter(s => prohibitedStrings.contains(s)).length >= 1)
+            !(pairs.filter(s => prohibitedStrings.contains(s)).length >= 1)
 
         def isNice1(): Boolean =
             threeVowels() & twoLettersInRow() & noProhibitedSubstrings()
@@ -33,7 +33,7 @@ object AoC2015Day05 extends App:
 
         def hasRecurringPair(): Boolean =
             val pairsWithIndices: List[(String, (Int, Int))] =
-                str.sliding(2)
+                pairs
                 .zipWithIndex
                 .map((s, idx) => (s, (idx, idx+1)))
                 .toList
