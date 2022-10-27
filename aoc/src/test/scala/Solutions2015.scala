@@ -12,7 +12,12 @@ class Solutions2015 extends AnyFunSuite:
     assertResult(2639)(actual = AoC2015Day03.answer2)
   }
 
-  test("AoC2015Day04") {
-    assertResult(282749)(actual = AoC2015Day04.answer1)
-    assertResult(9962624)(actual = AoC2015Day04.answer2)
+  // test("AoC2015Day04") {
+  //   assertResult(282749)(actual = AoC2015Day04.answer1)
+  //   assertResult(9962624)(actual = AoC2015Day04.answer2)
+  // }
+
+  test("AoC2015Day05") {
+    assertResult(255)(actual = AoC2015Day05.answer1)
+    assertResult(55)(actual = AoC2015Day05.answer2)
   }
