@@ -18,13 +18,13 @@ object AoC2015Day05 extends App:
         val prohibitedStrings: Set[String] = Set("ab", "cd", "pq", "xy")
 
         def threeVowels(): Boolean =
-            str.filter(char => vowels.contains(char)).length >= 3
+            str.count(vowels.contains) >= 3
         
         def twoLettersInRow(): Boolean =
-            pairs.filter(s => s(0) == s(1)).length >= 1
+            pairs.count(s => s(0) == s(1)) >= 1
 
         def noProhibitedSubstrings(): Boolean =
-            !(pairs.filter(s => prohibitedStrings.contains(s)).length >= 1)
+            !(pairs.count(prohibitedStrings.contains) >= 1)
 
         def isNice1(): Boolean =
             threeVowels() & twoLettersInRow() & noProhibitedSubstrings()
@@ -39,12 +39,12 @@ object AoC2015Day05 extends App:
                 .toList
             
             pairsWithIndices
-            .groupBy(_(0))
+            .groupBy(_._1)
             .map((pair, listOfPairsWithIndices) => listOfPairsWithIndices.map((pair, indices) => indices.toList).flatten.toSet)
-            .filter(_.size >= 4).toList.length >= 1
+            .count(_.size >= 4) >= 1
 
         def repeatingLetterSeparatedByOne(): Boolean =
-            str.sliding(3).filter(s => s(0) == s(2)).length >= 1
+            str.sliding(3).count(s => s(0) == s(2)) >= 1
 
         def isNice2(): Boolean =
             hasRecurringPair() & repeatingLetterSeparatedByOne()
