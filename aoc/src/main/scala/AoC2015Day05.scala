@@ -8,6 +8,11 @@ object AoC2015Day05 extends App:
         .toList
 
     case class Word(str: String):
+
+        val pairs = str.sliding(2)
+
+        // Part 1
+
         val vowels: Set[Char] = Set('a', 'e', 'i', 'o', 'u')
 
         val prohibitedStrings: Set[String] = Set("ab", "cd", "pq", "xy")
@@ -16,13 +21,15 @@ object AoC2015Day05 extends App:
             str.filter(char => vowels.contains(char)).length >= 3
         
         def twoLettersInRow(): Boolean =
-            str.sliding(2).map(s => s(0) == s(1)).contains(true)
+            str.sliding(2).filter(s => s(0) == s(1)).length >= 1
 
         def noProhibitedSubstrings(): Boolean =
-            ! str.sliding(2).map(s => prohibitedStrings.contains(s)).contains(true)
+            !(str.sliding(2).filter(s => prohibitedStrings.contains(s)).length >= 1)
 
         def isNice1(): Boolean =
             threeVowels() & twoLettersInRow() & noProhibitedSubstrings()
+
+        // Part 2
 
         def hasRecurringPair(): Boolean =
             val pairsWithIndices: List[(String, (Int, Int))] =
@@ -30,24 +37,24 @@ object AoC2015Day05 extends App:
                 .zipWithIndex
                 .map((s, idx) => (s, (idx, idx+1)))
                 .toList
-
-            println(pairsWithIndices)
             
-            val pairsGrouped = pairsWithIndices
+            pairsWithIndices
             .groupBy(_(0))
-            .map((pair, pairsWithIdxList) => (pair, pairsWithIdxList(0).toList))//.fold(Set())((set, idx) => set.include(idx))))
+            .map((pair, listOfPairsWithIndices) => listOfPairsWithIndices.map((pair, indices) => indices.toList).flatten.toSet)
+            .filter(_.size >= 4).toList.length >= 1
 
-            println(pairsGrouped.toList)
+        def repeatingLetterSeparatedByOne(): Boolean =
+            str.sliding(3).filter(s => s(0) == s(2)).length >= 1
 
-            true
+        def isNice2(): Boolean =
+            hasRecurringPair() & repeatingLetterSeparatedByOne()
 
-    //val answer1: Int = strings.map(Word(_).isNice1()).count(_ == true)
+    val words: List[Word] = strings.map(Word(_))
 
-    //println(s"Result part 1: ${answer1}")
+    val answer1: Int = words.map(_.isNice1()).count(_ == true)
 
-    //println("xyxy".sliding(2).zipWithIndex.map((s, idx) => (s, (idx, idx+1))).toList)//(0)(0))
-    println(
-        "xyxy".sliding(2).zipWithIndex.map((s, idx) => (s, (idx, idx+1))).toList.groupBy(_(0))
-        .map((pair, pairsWithIdxList) => (pair, pairsWithIdxList.map((_, indices) => indices).fold(Set())((set, indices) => set.include(indices(0)).include(indices(1))))
-        )
-        //(pair, pairsWithIdxList.fold(Set())((set, pairWithidx) => set.include(pairWithIdx(0)(0)).include(pairWithIdx(0)(1))))
+    println(s"Result part 1: ${answer1}")
+
+    val answer2: Int = words.map(_.isNice2()).count(_ == true)
+
+    println(s"Result part 2: ${answer2}")
