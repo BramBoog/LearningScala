@@ -40,7 +40,8 @@ object AoC2015Day05 extends App:
             
             pairsWithIndices
             .groupBy(_._1)
-            .map((pair, listOfPairsWithIndices) => listOfPairsWithIndices.map((pair, indices) => indices.toList).flatten.toSet)
+            .values
+            .map(_.map((pair, indices) => indices.toList).flatten.toSet)
             .count(_.size >= 4) >= 1
 
         def repeatingLetterSeparatedByOne(): Boolean =
