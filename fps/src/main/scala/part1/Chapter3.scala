@@ -86,3 +86,33 @@ object List:
     // Exercise 3.15
     def concat[A](l: List[List[A]]): List[A] =
         foldLeft(l, Nil: List[A])(append)
+
+    // Exercise 3.16
+    def add1ToEach(l: List[Int]): List[Int] =
+        foldRight(l, Nil: List[Int])((i, lst) => Cons(i + 1, lst))
+
+    // Exercise 3.17
+    def eachDoubleToString(l: List[Double]): List[String] =
+        foldRight(l, Nil: List[String])((d, lst) => Cons(d.toString, lst))
+
+    // Exercise 3.18
+    def map[A,B](as: List[A])(f: A => B): List[B] =
+        foldRight(as, Nil: List[B])((x, xs) => Cons(f(x), xs))
+
+    // Exercise 3.19
+    def filter[A](as: List[A])(f: A => Boolean): List[A] =
+        as match
+            case Nil => Nil
+            case _ => foldRight(as, Nil: List[A])((x, xs) => if (f(x)) Cons(x, xs) else xs)
+    
+    // Exercise 3.20
+    def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] =
+        concat(map(as)(f))
+
+    // Exercise 3.21
+    def filterAlt[A](as: List[A])(f: A => Boolean): List[A] =
+        flatMap(as)(a => if (f(a)) List(a) else Nil)
+
+    // Exercise 3.22
+    def addElementWise(l1: List[Int], l2: List[Int]): List[Int] =
+        ???
