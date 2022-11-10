@@ -76,7 +76,7 @@ object List:
     def foldLeftViaFoldRight[A,B](as: List[A], z: B)(f: (B,A) => B): B =
         foldRight(List.reverse(as), z)((x,y) => f(y,x))
 
-    def foldRightViaFoldLef[A,B](as: List[A], z: B)(f: (A,B) => B): B =
+    def foldRightViaFoldLeft[A,B](as: List[A], z: B)(f: (A,B) => B): B =
         foldLeft(List.reverse(as), z)((x,y) => f(y, x))
 
     // Exercise 3.14
@@ -117,16 +117,16 @@ object List:
     def addElementWise(l1: List[Int], l2: List[Int]): List[Int] =
         (l1, l2) match
             case (Nil, Nil) => Nil
-            case (Nil, Cons(h, t)) => throw new Exception("The second list is longer than the first.")
-            case (Cons(h, t), Nil) => throw new Exception("The first list is longer than the second.")
+            case (Nil, Cons(h, t)) => sys.error("The second list is longer than the first.")
+            case (Cons(h, t), Nil) => sys.error("The first list is longer than the second.")
             case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addElementWise(t1, t2))
 
     // Exercise 3.23
     def zipWith[A, B, C](l1: List[A], l2: List[B], op: (A, B) => C): List[C] =
         (l1, l2) match
             case (Nil, Nil) => Nil
-            case (Nil, Cons(h, t)) => throw new Exception("The second list is longer than the first.")
-            case (Cons(h, t), Nil) => throw new Exception("The first list is longer than the second.")
+            case (Nil, Cons(h, t)) => sys.error("The second list is longer than the first.")
+            case (Cons(h, t), Nil) => sys.error("The first list is longer than the second.")
             case (Cons(h1, t1), Cons(h2, t2)) => Cons(op(h1, h2), zipWith(t1, t2, op))
 
     // Exercise 3.24
