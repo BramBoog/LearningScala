@@ -19,9 +19,8 @@ object AoC2015Day06 extends App:
                 case _ => throw new IllegalArgumentException
         )        
 
-    val lightsArrayInit: List[List[Int]] = List.fill(1000)(List.fill(1000)(0))
 
-    def computeTotalLights(lightsArray: List[List[Int]], instrHandler: (Int, Instruction) => Int): Int = 
+    def applyInstructions[A](lightsArray: List[List[A]], instrHandler: (A, Instruction) => A): List[List[A]] = 
         (for {
             (row, i) <- lightsArray.zipWithIndex
         }
@@ -29,21 +28,20 @@ object AoC2015Day06 extends App:
             row.zipWithIndex
             .map((el, j) => 
                 instructions
-                .filter(instr => (instr.bottomLeftX <= j) && (j <= instr.topRightX) && (instr.bottomLeftY <= i) && (i <= instr.topRightY))
+                .filter(instr => instr.bottomLeftX <= j && j <= instr.topRightX && instr.bottomLeftY <= i && i <= instr.topRightY)
                 .foldLeft(el)(instrHandler)
             )
-        ).flatten.sum
+        )
     
     // Part 1
 
-    def takeLightInstruction1(cur: Int, instr: Instruction): Int =
-        (instr.instructionType, cur) match
-            case ("on", _) => 1
-            case ("off", _) => 0
-            case ("toggle", 0) => 1
-            case ("toggle", 1) => 0
+    def takeLightInstruction1(cur: Boolean, instr: Instruction): Boolean =
+        instr.instructionType match
+            case "on" => true
+            case "off" => false
+            case "toggle" => !cur
 
-    val answer1: Int = computeTotalLights(lightsArrayInit, takeLightInstruction1)
+    val answer1: Int = applyInstructions(List.fill(1000)(List.fill(1000)(false)), takeLightInstruction1).flatten.count(_==true)
 
     println(s"Result part 1: ${answer1}")
 
@@ -55,6 +53,6 @@ object AoC2015Day06 extends App:
             case ("off", light) => if (light > 0) light - 1 else 0
             case ("toggle", light) => light + 2
 
-    val answer2: Int = computeTotalLights(lightsArrayInit, takeLightInstruction2)
+    val answer2: Int = applyInstructions(List.fill(1000)(List.fill(1000)(0)), takeLightInstruction2).flatten.sum
 
     println(s"Result part 1: ${answer2}")
