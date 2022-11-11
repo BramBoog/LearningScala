@@ -41,7 +41,7 @@ object AoC2015Day06 extends App:
             case "off" => false
             case "toggle" => !cur
 
-    val answer1: Int = applyInstructions(List.fill(1000)(List.fill(1000)(false)), takeLightInstruction1).flatten.count(_==true)
+    val answer1: Int = applyInstructions(List.tabulate(1000, 1000)((_,_)=>false), takeLightInstruction1).flatten.count(_==true)
 
     println(s"Result part 1: ${answer1}")
 
@@ -53,6 +53,6 @@ object AoC2015Day06 extends App:
             case ("off", light) => if (light > 0) light - 1 else 0
             case ("toggle", light) => light + 2
 
-    val answer2: Int = applyInstructions(List.fill(1000)(List.fill(1000)(0)), takeLightInstruction2).flatten.sum
+    val answer2: Int = applyInstructions(List.tabulate(1000, 1000)((_,_)=>0), takeLightInstruction2).flatten.sum
 
     println(s"Result part 1: ${answer2}")
