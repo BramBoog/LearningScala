@@ -8,18 +8,21 @@ object List:
         else Cons(as.head, apply(as.tail: _*))
 
     // Exercise 3.2
-    def tail[A](l: List[A]): List[A] = l match
-        case Nil => ???
-        case Cons(h, t) => t
+    def tail[A](l: List[A]): List[A] =
+        l match
+            case Nil => throw new IllegalArgumentException("Cannot take tail of an empty list.")
+            case Cons(h, t) => t
 
-    def head[A](l: List[A]): A = l match
-        case Nil => ???
-        case Cons(h, _) => h
+    def head[A](l: List[A]): A =
+        l match
+            case Nil => throw new IllegalArgumentException("Cannot take head of an empty list.")
+            case Cons(h, _) => h
 
     // Exercise 3.3
-    def setHead[A](el: A, l: List[A]): List[A] = l match
-        case Nil => Nil
-        case Cons(_, t) => Cons(el, t)
+    def setHead[A](el: A, l: List[A]): List[A] =
+        l match
+            case Nil => Nil
+            case Cons(_, t) => Cons(el, t)
 
     // Exercise 3.4
     def drop[A](l: List[A], n: Int): List[A] =
@@ -74,10 +77,14 @@ object List:
 
     // Exercise 3.13
     def foldLeftViaFoldRight[A,B](as: List[A], z: B)(f: (B,A) => B): B =
-        foldRight(List.reverse(as), z)((x,y) => f(y,x))
+        foldRight(as, identity[B])((a, g: B=>B) => (b => g(f(b, a))))(z)
+        /* Alternative:
+        foldRight(List.reverse(as), z)((x,y) => f(y,x)) */
 
     def foldRightViaFoldLeft[A,B](as: List[A], z: B)(f: (A,B) => B): B =
-        foldLeft(List.reverse(as), z)((x,y) => f(y, x))
+        foldLeft(as, identity[B])((g: B=>B, a) => (b => g(f(a, b))))(z)
+        /* Alternative:
+        foldLeft(List.reverse(as), z)((x,y) => f(y, x)) */
 
     // Exercise 3.14
     def append[A](l1: List[A], l2: List[A]): List[A] =
