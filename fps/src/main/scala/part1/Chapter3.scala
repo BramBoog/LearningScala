@@ -10,12 +10,12 @@ object List:
     // Exercise 3.2
     def tail[A](l: List[A]): List[A] =
         l match
-            case Nil => throw new IllegalArgumentException("Cannot take tail of an empty list.")
+            case Nil => sys.error("Cannot take tail of an empty list.")
             case Cons(h, t) => t
 
     def head[A](l: List[A]): A =
         l match
-            case Nil => throw new IllegalArgumentException("Cannot take head of an empty list.")
+            case Nil => sys.error("Cannot take head of an empty list.")
             case Cons(h, _) => h
 
     // Exercise 3.3
@@ -138,7 +138,7 @@ object List:
 
     // Exercise 3.24
     def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean =
-        if (length(sup) < length(sub)) throw new IllegalArgumentException("The length of the sublist is longer than the list to search.")
+        if (length(sup) < length(sub)) sys.error("The length of the sublist is longer than the list to search.")
         else
             def makeSliding(inputL: List[A]): List[List[A]] =
                 def makeSlidingSub(l: List[A], i: Int): List[A] =
