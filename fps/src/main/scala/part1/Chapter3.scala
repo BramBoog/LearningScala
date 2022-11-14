@@ -77,12 +77,12 @@ object List:
 
     // Exercise 3.13
     def foldLeftViaFoldRight[A,B](as: List[A], z: B)(f: (B,A) => B): B =
-        foldRight(as, identity[B])((a, g: B=>B) => (b => g(f(b, a))))(z)
+        foldRight(as, identity[B])((a, g: B => B) => (b => g(f(b, a))))(z)
         /* Alternative:
         foldRight(List.reverse(as), z)((x,y) => f(y,x)) */
 
     def foldRightViaFoldLeft[A,B](as: List[A], z: B)(f: (A,B) => B): B =
-        foldLeft(as, identity[B])((g: B=>B, a) => (b => g(f(a, b))))(z)
+        foldLeft(as, identity[B])((g: B => B, a) => (b => g(f(a, b))))(z)
         /* Alternative:
         foldLeft(List.reverse(as), z)((x,y) => f(y, x)) */
 
