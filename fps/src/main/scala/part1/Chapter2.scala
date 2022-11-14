@@ -2,6 +2,20 @@ package part1
 
 object Chapter2 extends App:
 
+    // Exercise 2.1
+    def fib(n: Int): Int =
+        def loop(i: Int, x0: Int, x1: Int): Int =
+            if (i == n) x1
+            else loop(i+1, x1, x0+x1)
+
+        if (n == 0) 0
+        else loop(1, 0, 1)
+
+    assert(fib(0) == 0)
+    assert(fib(1) == 1)
+    assert(fib(3) == 2)
+    assert(fib(5) == 5)
+
     // Exercise 2.2
     def isSorted[A](ar: Array[A], ordered: (A,A) => Boolean): Boolean =
         def loop(n: Int): Boolean =
