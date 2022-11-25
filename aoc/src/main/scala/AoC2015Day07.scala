@@ -1,21 +1,21 @@
 object AoC2015Day07 extends App:
     import scala.io.Source
 
-    sealed trait Instruction(retName: String):
+    sealed trait Instruction:
+        def retName: String
+        def evaluate(wiresMap: Map[String, Int]): Option[Int]
         def getWireValueByName(wiresMap: Map[String, Int], wireName: String): Option[Int] =
             wiresMap.get(wireName)
 
-        def evaluate(wiresMap: Map[String, Int]): Option[Int]
-
-    case class litInput(retName: String, input: Int) extends Instruction(retName):
+    case class litInput(retName: String, input: Int) extends Instruction:
         def evaluate(wiresMap: Map[String, Int]) =
             Some(input)
 
-    case class singleInput(retName: String, inputName: String, op: Int => Int) extends Instruction(retName):
+    case class singleInput(retName: String, inputName: String, op: Int => Int) extends Instruction:
         def evaluate(wiresMap: Map[String, Int]) =
             getWireValueByName(wiresMap, inputName).map(op)
 
-    case class doubleInput(retName: String, inputName1: String, inputName2: String, op: (Int, Int) => Int) extends Instruction(retName):
+    case class doubleInput(retName: String, inputName1: String, inputName2: String, op: (Int, Int) => Int) extends Instruction:
         def evaluate(wiresMap: Map[String, Int]) =
             getWireValueByName(wiresMap, inputName1)
             .flatMap(x => getWireValueByName(wiresMap, inputName2).map(op.curried(x)))
@@ -38,6 +38,7 @@ object AoC2015Day07 extends App:
 
     @annotation.tailrec
     def solve(forWire: String, wires: Map[String, Int], instr: List[Instruction]): Int =
+        println(instr.length)
         wires.get(forWire) match
             case Some(answ) => answ
             case None => 
