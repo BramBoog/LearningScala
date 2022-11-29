@@ -20,7 +20,7 @@ object AoC2015Day07 extends App:
             getWireValueByName(wiresMap, inputName1)
             .flatMap(x => getWireValueByName(wiresMap, inputName2).map(op.curried(x)))
 
-    def solve(forWire: String, instructions: List[Instruction], wireOverrides: Option[Map[String, Int]] = None): Int =
+    def solve(forWire: String, instructions: List[Instruction], wireOverrides: Map[String, Int] = Map()): Int =
         @annotation.tailrec
         def runInstructions(wires: Map[String, Int], instr: List[Instruction]): Int =
             wires.get(forWire) match
@@ -30,9 +30,7 @@ object AoC2015Day07 extends App:
                         case None => runInstructions(wires, instr.tail.appended(instr.head))
                         case Some(x) => runInstructions(wires + (instr.head.retName -> x), instr.tail)
 
-        wireOverrides match
-            case None => runInstructions(Map(), instructions)
-            case Some(m) => runInstructions(m, instructions.filter(i => !m.keySet.contains(i.retName)))
+        runInstructions(wireOverrides, instructions.filter(i => !wireOverrides.keySet.contains(i.retName)))
 
     def parseInstruction(str: String): Instruction =
         str match
@@ -62,5 +60,5 @@ object AoC2015Day07 extends App:
     val answer1: Int = solve("a", instructions)
     println(s"Result part 1: ${answer1}")
 
-    val answer2: Int = solve("a", instructions, Some(Map(("b" -> answer1))))
+    val answer2: Int = solve("a", instructions, Map(("b" -> answer1)))
     println(s"Result part 2: ${answer2}")
