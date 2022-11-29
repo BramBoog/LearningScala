@@ -1,6 +1,5 @@
 object AoC2015Day06 extends App:
     import scala.io.Source
-    import scala.util.matching.Regex
 
     case class Instruction(instructionType: String, bottomLeftX: Int, bottomLeftY: Int, topRightX: Int, topRightY: Int)
 
