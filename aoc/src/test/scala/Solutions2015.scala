@@ -31,3 +31,10 @@ class Solutions2015 extends AnyFunSuite:
     assertResult(956)(actual = AoC2015Day07.answer1)
     assertResult(40149)(actual = AoC2015Day07.answer2)
   }
+
+  class Solutions2021 extends AnyFunSuite:
+
+    test("AoC2021Day16") {
+      assertResult(925)(actual = AoC2021Day16.answer1)
+      //assertResult(342997120375)(actual = AoC2021Day16.answer2) -> number too large?
+    }
