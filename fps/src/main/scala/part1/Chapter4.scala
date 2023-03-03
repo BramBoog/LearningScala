@@ -1,3 +1,6 @@
+package Chapter4
+import Chapter3.*
+
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
 sealed trait Option[+A]:

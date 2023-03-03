@@ -1,7 +1,4 @@
-package part1
-
 object Chapter2 extends App:
-
     // Exercise 2.1
     def fib(n: Int): Int =
         def loop(i: Int, x0: Int, x1: Int): Int =

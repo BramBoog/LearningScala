@@ -1,3 +1,5 @@
+package Chapter3
+
 /* The + is a variance annotation that indicates that A is a "covariant" or "positive" parameter of List.
 This means for all types X and Y, if X is a subtype of Y, List[X] is a subtype of List[Y]. */
 sealed trait List[+A]
