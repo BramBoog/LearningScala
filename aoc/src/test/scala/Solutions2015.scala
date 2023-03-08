@@ -32,6 +32,11 @@ class Solutions2015 extends AnyFunSuite:
     assertResult(40149)(actual = AoC2015Day07.answer2)
   }
 
+  test("AoC2015Day08") {
+    assertResult(1342)(actual = AoC2015Day08.answer1)
+    assertResult(2074)(actual = AoC2015Day08.answer2)
+  }
+
   class Solutions2021 extends AnyFunSuite:
 
     test("AoC2021Day16") {
