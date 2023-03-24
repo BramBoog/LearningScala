@@ -7,6 +7,12 @@ case object Nil extends List[Nothing]
 case class Cons[+A](head: A, tail: List[A]) extends List[A]
 
 object List:
+    /*
+    An `apply` method in companion object allows convenient construction of datatype via literals (`List(1,2,3)`).
+    The `as: A*` parameter indicates the function is variadic, meaning accepts zero or more arguments of type A. This is just syntax
+    for providing a `Seq` of parameters; internally, `as` are converted to a `Seq[A]`, hence why `head` and `tail` can be called on `as`.
+    The special type annotation `_*` allows us to pass a `Seq` to a variadic method.
+    */
     def apply[A](as: A*): List[A] =
         if (as.isEmpty) Nil
         else Cons(as.head, apply(as.tail: _*))
