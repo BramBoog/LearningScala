@@ -99,10 +99,18 @@ sealed trait Stream[+A]:
     // Exercise 5.16
     def scanRight[B](z: B)(f: (A, => B) => B): Stream[B] =
         // Cannot be done using unfold, because unfold builds the result from the head, instead of the last element like foldRight.
-        foldRight(Stream(z))(
-            (a, s) =>
-                Stream.cons(f(a, s.headOption.getOrElse(z)), s)
-        )
+        // The following implementation is not linear, because in addition to traversing the stream once for each element,
+        // it also has to do a lookup back into the constructed stream with headOption:
+        // foldRight(Stream(z))((a, s) => Stream.cons(f(a, s.headOption.getOrElse(z)), s))
+        // Instead we keep both the stream to return and its head element in state:
+        foldRight((z, Stream(z)))(
+            (a, acc) =>
+                // acc is passed by name into this function and will be passed by-name in both f and cons.
+                // So to avoid possible re-evaluation of the tuple should the user request to know both b and the tail, store it in a lazy val
+                lazy val acc2 = acc
+                val b = f(a, acc._1)
+                (b, Stream.cons(b, acc._2))
+        )._2
 
 object Stream:
     def cons[A](hd: => A, tl: => Stream[A]): Stream[A] =
