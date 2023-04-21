@@ -1,3 +1,4 @@
+import javax.swing.InputMap
 trait RNG:
     def nextInt: (Int, RNG)
 
@@ -98,7 +99,7 @@ def map2ViaFlatMap[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
     flatMap(ra)(a => mapViaFlatMap(rb)(b => f(a, b)))
 
 // Exercise 6.10
-// General state action data type
+/** General state action data type */
 case class State[S, +A](run: S => (A, S)):
     def map[B](f: A => B): State[S, B] =
         State(
@@ -127,3 +128,41 @@ object State:
 
     def sequence[S, A](fs: List[State[S, A]]): State[S, List[A]] =
         fs.foldRight(unit(Nil: List[A]))((f, sLst) => f.map2(sLst)((a, as) => a :: as))
+
+    /** Get the incoming state by passing it along as the value (as well as as the state). */
+    def get[S]: State[S, S] = State(s => (s, s))
+
+    /** Set the state to s, ignoring the incoming state. */
+    def set[S](s: S): State[S, Unit] = State(_ => ((), s))
+
+    /** Modify the incoming state by f. Return Unit as the value to indicate it doesn't return anything other than the new state. */
+    def modify[S](f: S => S): State[S, Unit] =
+        for
+            s <- get
+            _ <- set(f(s))
+        yield ()
+
+// Exercise 6.11
+sealed trait Input
+case object Coin extends Input
+case object Turn extends Input
+
+case class Machine(locked: Boolean, candies: Int, coins: Int):
+    private def insertCoin: Machine =
+        if (candies <= 0 || !locked) this
+        else this.copy(locked = false, coins = coins + 1)
+
+    private def turnKnob: Machine =
+        if (candies <= 0 || locked) this
+        else this.copy(locked = true, candies = candies - 1)
+    
+    def takeInput(i: Input): Machine =
+        i match
+            case Coin => insertCoin
+            case Turn => turnKnob
+
+def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] =
+    for 
+        _ <- State.sequence(inputs.map(i => State.modify[Machine](m => m.takeInput(i))))
+        s <- State.get
+    yield (s.coins, s.candies)
