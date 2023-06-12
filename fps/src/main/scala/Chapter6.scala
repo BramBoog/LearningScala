@@ -1,4 +1,3 @@
-import javax.swing.InputMap
 trait RNG:
     def nextInt: (Int, RNG)
 
